@@ -202,8 +202,8 @@ user_input = get_text()
 if user_input:
     output = get_response(user_input)
     # store the output
-    st.session_state.past.append(user_input)
-    #st.session_state.generated.append(output)
+    #st.session_state.past.append(user_input)
+    st.session_state.generated.append(output)
 
 if st.session_state['generated']:
     for i in range(len(st.session_state['generated'])-1, -1, -1):
