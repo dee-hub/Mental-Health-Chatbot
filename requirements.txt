@@ -15,3 +15,5 @@ matplotlib
 transformers
 torchvision
 torch
+streamlit-chat
+streamlit-extras
