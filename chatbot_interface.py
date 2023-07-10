@@ -22,6 +22,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+nltk.download('punkt')
 from nltk.stem import WordNetLemmatizer
 import openai
 import streamlit as st
