@@ -184,7 +184,7 @@ def get_response(msg):
 #Type your questions within the functions
 
 #Creating the chatbot interface
-st.title("chatBot : Streamlit + openAI")
+st.title("Aura: Your Mental Health Counselling Chatbot")
 
 # Storing the chat
 if 'generated' not in st.session_state:
