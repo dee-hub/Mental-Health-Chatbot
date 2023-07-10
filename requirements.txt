@@ -1,0 +1,17 @@
+snscrape
+wordcloud
+pyperclip
+clipboard 
+openai
+pandas
+streamlit
+nltk
+textblob
+spacy
+gensim
+plotly
+pyldavis
+matplotlib
+transformers
+torchvision
+torch
