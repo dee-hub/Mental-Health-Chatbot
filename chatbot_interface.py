@@ -190,10 +190,11 @@ def get_response(msg):
     conn = ibm_db.connect(dsn, "", "")
     insert_data_sql = """
         INSERT INTO CHATBOT_CONVO (user_chats)
-        VALUES (msg)
+        VALUES (str(msg))
         """
         # Execute the SQL statement to insert data
     stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+    print(f"{msg} = Uploaded on DB")
     ibm_db.close(conn)
     
     X = bag_of_words(sentence, all_words)
@@ -219,6 +220,7 @@ def get_response(msg):
                 # Execute the SQL statement to insert data
                 #conn = ibm_db.connect(dsn, "", "")
                 stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+                print(f"{random.choice(intent['responses'])} = Uploaded on DB")
                 ibm_db.close(conn)
                 return random.choice(intent['responses'])
                 
@@ -231,6 +233,7 @@ def get_response(msg):
         # Execute the SQL statement to insert data
         #conn = ibm_db.connect(dsn, "", "")
         stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+        print(f"I do not understand = Uploaded on DB")
         ibm_db.close(conn)
         
         return "I do not understand..."
