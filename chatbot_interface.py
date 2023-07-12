@@ -28,6 +28,7 @@ import openai
 import streamlit as st
 # pip install streamlit-chat
 from streamlit_chat import message
+import ibm_db
 
 lemmatizer = WordNetLemmatizer()
 
@@ -160,8 +161,41 @@ model.eval()
 
 bot_name = "Aura"
 
+#Replace the placeholder values with your actual Db2 hostname, username, and password:
+dsn_hostname = "8e359033-a1c9-4643-82ef-8ac06f5107eb.bs2io90l08kqb1od8lcg.databases.appdomain.cloud" # e.g.: "54a2f15b-5c0f-46df-8954-7e38e612c2bd.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud"
+dsn_uid = "klp67023"        # Username
+dsn_pwd = "fcD4OYKB3uykMu5F"        # Password
+
+dsn_driver = "{IBM DB2 ODBC DRIVER}"
+dsn_database = "BLUDB"            # e.g. "BLUDB"
+dsn_port = "30120"                # e.g. "32733" 
+dsn_protocol = "TCPIP"            # i.e. "TCPIP"
+dsn_security = "SSL"              #i.e. "SSL"
+
+#DO NOT MODIFY THIS CELL. Just RUN it with Shift + Enter
+#Create the dsn connection string
+dsn = (
+    "DRIVER={0};"
+    "DATABASE={1};"
+    "HOSTNAME={2};"
+    "PORT={3};"
+    "PROTOCOL={4};"
+    "UID={5};"
+    "PWD={6};"
+    "SECURITY={7};").format(dsn_driver, dsn_database, dsn_hostname, dsn_port, dsn_protocol, dsn_uid, dsn_pwd,dsn_security)
+
 def get_response(msg):
     sentence = tokenize(msg)
+    
+    conn = ibm_db.connect(dsn, "", "")
+    insert_data_sql = """
+        INSERT INTO CHATBOT_CONVO (user_chats)
+        VALUES (msg)
+        """
+        # Execute the SQL statement to insert data
+    stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+    ibm_db.close(conn)
+    
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -177,8 +211,28 @@ def get_response(msg):
         for intent in intents['intents']:
             if tag == intent["tag"]:
                 print(f"Identified context = {tag}")
+                conn = ibm_db.connect(dsn, "", "")
+                insert_data_sql = """
+                INSERT INTO CHATBOT_CONVO (chatbot_responses)
+                VALUES (random.choice(intent['responses']))
+                """
+                # Execute the SQL statement to insert data
+                #conn = ibm_db.connect(dsn, "", "")
+                stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+                ibm_db.close(conn)
                 return random.choice(intent['responses'])
+                
     else:
+        conn = ibm_db.connect(dsn, "", "")
+        insert_data_sql = """
+        INSERT INTO CHATBOT_CONVO (chatbot_responses)
+        VALUES ("I do not understand")
+        """
+        # Execute the SQL statement to insert data
+        #conn = ibm_db.connect(dsn, "", "")
+        stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+        ibm_db.close(conn)
+        
         return "I do not understand..."
 
 #Type your questions within the functions
