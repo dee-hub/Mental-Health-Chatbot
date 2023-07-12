@@ -187,16 +187,6 @@ dsn = (
 def get_response(msg):
     sentence = tokenize(msg)
     
-    conn = ibm_db.connect(dsn, "", "")
-    insert_data_sql = """
-    INSERT INTO CHATBOT_CONVO (user_chats)
-    VALUES (str(msg))
-    """
-        # Execute the SQL statement to insert data
-    stmt = ibm_db.exec_immediate(conn, insert_data_sql)
-    print(f"{msg} = Uploaded on DB")
-    ibm_db.close(conn)
-    
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -255,6 +245,15 @@ def get_text():
     return input_text
 
 user_input = get_text()
+conn = ibm_db.connect(dsn, "", "")
+insert_data_sql = """
+INSERT INTO CHATBOT_CONVO (user_chats)
+VALUES (user_input)
+"""
+# Execute the SQL statement to insert data
+stmt = ibm_db.exec_immediate(conn, insert_data_sql)
+print(f"{user_input} = Uploaded on DB")
+ibm_db.close(conn)
 
 if user_input:
     output = get_response(user_input)
