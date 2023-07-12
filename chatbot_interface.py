@@ -248,7 +248,7 @@ user_input = get_text()
 conn = ibm_db.connect(dsn, "", "")
 insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO VALUES (?,)"
 prep_stmt = ibm_db.prepare(conn, insert_data_sql)
-ibm_db.bind_param(prep_stmt, str(user_input), user_chats)
+ibm_db.bind_param(prep_stmt, 1, user_input)
 ibm_db.execute(prep_stmt)
 
 #insert_data_sql = """
