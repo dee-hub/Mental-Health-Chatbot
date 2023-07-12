@@ -245,10 +245,11 @@ def get_text():
     return input_text
 
 user_input = get_text()
+quoted_user_input = ibm_db.quote(user_input)
 conn = ibm_db.connect(dsn, "", "")
 insert_data_sql = """
 INSERT INTO CHATBOT_CONVO (user_chats)
-VALUES ("{user_input}")
+VALUES ("{quoted_user_input}")
 """
 # Execute the SQL statement to insert data
 stmt = ibm_db.exec_immediate(conn, insert_data_sql)
