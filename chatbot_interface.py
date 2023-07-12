@@ -245,7 +245,6 @@ def get_text():
     return input_text
 
 user_input = get_text()
-quoted_user_input = ibm_db.quote(user_input)
 conn = ibm_db.connect(dsn, "", "")
 insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO VALUES (?,)"
 prep_stmt = ibm_db.prepare(conn, insert_data_sql)
