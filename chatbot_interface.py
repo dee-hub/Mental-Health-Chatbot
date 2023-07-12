@@ -248,7 +248,7 @@ user_input = get_text()
 conn = ibm_db.connect(dsn, "", "")
 insert_data_sql = """
 INSERT INTO CHATBOT_CONVO (user_chats)
-VALUES (str(user_input))
+VALUES ("{user_input}")
 """
 # Execute the SQL statement to insert data
 stmt = ibm_db.exec_immediate(conn, insert_data_sql)
