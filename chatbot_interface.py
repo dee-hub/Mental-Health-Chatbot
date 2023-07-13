@@ -185,6 +185,10 @@ dsn = (
     "SECURITY={7};").format(dsn_driver, dsn_database, dsn_hostname, dsn_port, dsn_protocol, dsn_uid, dsn_pwd,dsn_security)
 
 def get_response(msg):
+    conn = ibm_db.connect(dsn, "", "")
+    insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO VALUES (?, ?)"
+    prep_stmt = ibm_db.prepare(conn, insert_data_sql)
+    ibm_db.bind_param(prep_stmt, 1, msg)
     sentence = tokenize(msg)
     
     X = bag_of_words(sentence, all_words)
@@ -202,28 +206,19 @@ def get_response(msg):
         for intent in intents['intents']:
             if tag == intent["tag"]:
                 print(f"Identified context = {tag}")
-                conn = ibm_db.connect(dsn, "", "")
-                insert_data_sql = """
-                INSERT INTO CHATBOT_CONVO (chatbot_responses)
-                VALUES (random.choice(intent['responses']))
-                """
-                # Execute the SQL statement to insert data
-                #conn = ibm_db.connect(dsn, "", "")
-                stmt = ibm_db.exec_immediate(conn, insert_data_sql)
-                print(f"{random.choice(intent['responses'])} = Uploaded on DB")
+                resp_221 = random.choice(intent['responses'])
+                ibm_db.bind_param(prep_stmt, 2, resp_221)
+                ibm_db.execute(prep_stmt)
+                print(f"{resp_221} = Uploaded on DB")
                 ibm_db.close(conn)
+                
                 return random.choice(intent['responses'])
                 
     else:
-        conn = ibm_db.connect(dsn, "", "")
-        insert_data_sql = """
-        INSERT INTO CHATBOT_CONVO (chatbot_responses)
-        VALUES ("I do not understand")
-        """
-        # Execute the SQL statement to insert data
-        #conn = ibm_db.connect(dsn, "", "")
-        stmt = ibm_db.exec_immediate(conn, insert_data_sql)
-        print(f"I do not understand = Uploaded on DB")
+        resp_221 = "I do not understand..."
+        ibm_db.bind_param(prep_stmt, 2, resp_221)
+        ibm_db.execute(prep_stmt)
+        print(f"{resp_221} = Uploaded on DB")
         ibm_db.close(conn)
         
         return "I do not understand..."
