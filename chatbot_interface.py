@@ -239,18 +239,19 @@ if 'past' not in st.session_state:
  #   input_text = st.text_input("You: ", key="input")
   #  return input_text
 
-def get_text():
-    input_text = st.text_input("You: ", key="input")
-    return input_text
+#def get_text():
+#input_text = st.text_input("You: ", key="input")
+#return input_text
 
-user_input = get_text()
-
+#user_input = get_text()
+user_input = st.text_input("You: ", key="input")
 if user_input:
     output = get_response(user_input)
     # store the output
     st.session_state.past.append(user_input)
     st.session_state.generated.append(output)
-    st.write('<script>document.getElementById("input").value = "";</script>', unsafe_allow_html=True)
+    st.session_state.input = ''  # Clear the input text
+    #st.write('<script>document.getElementById("input").value = "";</script>', unsafe_allow_html=True)
     
 
 if st.session_state['generated']:
