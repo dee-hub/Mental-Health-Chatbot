@@ -240,12 +240,9 @@ if 'past' not in st.session_state:
   #  return input_text
 
 def get_text():
-    input_text = st.text_input("You: ", key="input", on_change=clear_input)
+    input_text = st.text_input("You: ", key="input")
     return input_text
 
-def clear_input():
-    st.session_state.input = ''
-    
 user_input = get_text()
 
 if user_input:
@@ -253,6 +250,7 @@ if user_input:
     # store the output
     st.session_state.past.append(user_input)
     st.session_state.generated.append(output)
+    st.session_state.input = ''
     
 
 if st.session_state['generated']:
