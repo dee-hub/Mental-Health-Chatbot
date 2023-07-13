@@ -240,21 +240,6 @@ def get_text():
     return input_text
 
 user_input = get_text()
-conn = ibm_db.connect(dsn, "", "")
-insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO (user_conversations) VALUES (?,)"
-
-prep_stmt = ibm_db.prepare(conn, insert_data_sql)
-ibm_db.bind_param(prep_stmt, 1, user_input)
-ibm_db.execute(prep_stmt)
-
-#insert_data_sql = """
-#INSERT INTO CHATBOT_CONVO (user_chats)
-#VALUES ("{quoted_user_input}") 
-#"""
-# Execute the SQL statement to insert data
-#stmt = ibm_db.exec_immediate(conn, insert_data_sql)
-print(f"{user_input} = Uploaded on DB")
-ibm_db.close(conn)
 
 if user_input:
     output = get_response(user_input)
