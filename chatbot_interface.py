@@ -30,137 +30,16 @@ import streamlit as st
 from streamlit_chat import message
 import ibm_db
 
-lemmatizer = WordNetLemmatizer()
+styl = f"""
+<style>
+    .stTextInput {{
+      position: fixed;
+      bottom: 3rem;
+    }}
+</style>
+"""
 
-def tokenize(sentence):
-    """
-    split sentence into array of words/tokens
-    a token can be a word or punctuation character, or number
-    """
-    return nltk.word_tokenize(sentence)
-
-
-def lemma(word):
-    """
-    stemming = find the root form of the word
-    examples:
-    words = ["organize", "organizes", "organizing"]
-    words = [stem(w) for w in words]
-    -> ["organ", "organ", "organ"]
-    """
-    return lemmatizer.lemmatize(word.lower(), pos='v')
-
-
-def bag_of_words(tokenized_sentence, words):
-    """
-    return bag of words array:
-    1 for each known word that exists in the sentence, 0 otherwise
-    example:
-    sentence = ["hello", "how", "are", "you"]
-    words = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
-    bog   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
-    """
-    # stem each word
-    sentence_words = [lemma(word) for word in tokenized_sentence]
-    # initialize bag with 0 for each word
-    bag = np.zeros(len(words), dtype=np.float32)
-    for idx, w in enumerate(words):
-        if w in sentence_words:
-            bag[idx] = 1
-
-    return bag
-
-class NeuralNet(nn.Module):
-    def __init__(self, input_size, hidden_size, num_classes):
-        super(NeuralNet, self).__init__()
-        self.l1 = nn.Linear(input_size, hidden_size)
-        self.l2 = nn.Linear(hidden_size, hidden_size)
-        self.l3 = nn.Linear(hidden_size, num_classes)
-        self.relu = nn.ReLU()
-
-    def forward(self, x):
-        out = self.l1(x)
-        out = self.relu(out)
-        out = self.l2(out)
-        out = self.relu(out)
-        out = self.l3(out)
-        # no activation and no softmax at the end
-        return out
-
-with open('intents.json', 'r') as f:
-    intents = json.load(f)
-
-all_words = []
-tags = []
-xy = []
-
-for intent in intents['intents']:
-    tag = intent['tag']
-    # add to tag list
-    tags.append(tag)
-    for pattern in intent['patterns']:
-        # tokenize each word in the sentence
-        w = tokenize(pattern)
-        # add to our words list
-        all_words.extend(w)
-        # add to xy pair
-        xy.append((w, tag))
-
-# stem and lower each word
-ignore_words = ['?', '.', '!']
-all_words = [lemma(w) for w in all_words if w not in ignore_words]
-# remove duplicates and sort
-all_words = sorted(set(all_words))
-tags = sorted(set(tags))
-
-print(len(xy), "patterns")
-print(len(tags), "tags:", tags)
-print(len(all_words), "unique lemmatized words:", all_words)
-
-# create training data
-X_train = []
-y_train = []
-for (pattern_sentence, tag) in xy:
-    # X: bag of words for each pattern_sentence
-    bag = bag_of_words(pattern_sentence, all_words)
-    X_train.append(bag)
-    # y: PyTorch CrossEntropyLoss needs only class labels, not one-hot
-    label = tags.index(tag)
-    y_train.append(label)
-
-X_train = np.array(X_train)
-y_train = np.array(y_train)
-
-# Hyper-parameters
-num_epochs = 1000
-batch_size = 8
-learning_rate = 0.001
-input_size = len(X_train[0])
-hidden_size = 8
-output_size = len(tags)
-print(input_size, output_size)
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-with open('intents.json', 'r') as json_data:
-    intents = json.load(json_data)
-
-FILE = "bot.pth"
-data = torch.load(FILE)
-
-input_size = data["input_size"]
-hidden_size = data["hidden_size"]
-output_size = data["output_size"]
-all_words = data['all_words']
-tags = data['tags']
-model_state = data["model_state"]
-
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
-
-bot_name = "Aura"
-
+st.markdown(styl, unsafe_allow_html=True)
 #Replace the placeholder values with your actual Db2 hostname, username, and password:
 dsn_hostname = "8e359033-a1c9-4643-82ef-8ac06f5107eb.bs2io90l08kqb1od8lcg.databases.appdomain.cloud" # e.g.: "54a2f15b-5c0f-46df-8954-7e38e612c2bd.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud"
 dsn_uid = "klp67023"        # Username
@@ -184,44 +63,52 @@ dsn = (
     "PWD={6};"
     "SECURITY={7};").format(dsn_driver, dsn_database, dsn_hostname, dsn_port, dsn_protocol, dsn_uid, dsn_pwd,dsn_security)
 
+context = [
+    {"role": "system", "content": "You are HUSU, a mental health therapist for University of Hull, who\
+     uses compassionate listening to have helpful and meaningful conversations with users. HUSU \
+     is empathic and friendly. HUSU's objective is to help the user feel better by feeling heard. \
+     With each response, HUSU offers follow-up questions to encourage openness and continues \
+     the conversation in a natural way., ."},
+]
+
+if 'context' not in st.session_state:
+    st.session_state['context'] = context
+
+openai.api_key = "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"
+def continue_conversation(messages, temperature=0.7):
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        temperature=temperature
+    )
+    return response.choices[0].message["content"]
+
+def add_prompts_conversation(user_input):
+    # Add user input to the conversation
+    st.session_state['context'].append({"role": "user", "content": user_input})
+    
+    # Get response from the model
+    response = continue_conversation(st.session_state['context'])
+    
+    # Add model's response to the conversation
+    st.session_state['context'].append({"role": "assistant", "content": response})
+    
+    # Display the conversation in panels
+    return user_input, response
+
+
 def get_response(msg):
+    user, chatbot = add_prompts_conversation(msg)
     conn = ibm_db.connect(dsn, "", "")
     insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO VALUES (?, ?)"
     prep_stmt = ibm_db.prepare(conn, insert_data_sql)
-    ibm_db.bind_param(prep_stmt, 1, msg)
-    sentence = tokenize(msg)
-    
-    X = bag_of_words(sentence, all_words)
-    X = X.reshape(1, X.shape[0])
-    X = torch.from_numpy(X).to(device)
+    ibm_db.bind_param(prep_stmt, 1, user)
+    ibm_db.bind_param(prep_stmt, 2, chatbot)
+    ibm_db.execute(prep_stmt)
+    #print(f"{resp_221} = Uploaded on DB")
+    ibm_db.close(conn)
 
-    output = model(X)
-    _, predicted = torch.max(output, dim=1)
-
-    tag = tags[predicted.item()]
-
-    probs = torch.softmax(output, dim=1)
-    prob = probs[0][predicted.item()]
-    if prob.item() > 0.85:
-        for intent in intents['intents']:
-            if tag == intent["tag"]:
-                print(f"Identified context = {tag}")
-                resp_221 = random.choice(intent['responses'])
-                ibm_db.bind_param(prep_stmt, 2, resp_221)
-                ibm_db.execute(prep_stmt)
-                print(f"{resp_221} = Uploaded on DB")
-                ibm_db.close(conn)
-                
-                return random.choice(intent['responses'])
-                
-    else:
-        resp_221 = "I do not understand..."
-        ibm_db.bind_param(prep_stmt, 2, resp_221)
-        ibm_db.execute(prep_stmt)
-        print(f"{resp_221} = Uploaded on DB")
-        ibm_db.close(conn)
-        
-        return "I do not understand..."
+    return chatbot
 
 #Type your questions within the functions
 
