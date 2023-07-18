@@ -35,6 +35,7 @@ styl = f"""
     .stTextInput {{
       position: fixed;
       bottom: 3rem;
+      z-index:9999;
     }}
 </style>
 """
