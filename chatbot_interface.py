@@ -75,7 +75,7 @@ context = [
 if 'context' not in st.session_state:
     st.session_state['context'] = context
 
-openai.api_key = "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"
+openai.api_key = st.secrets['openai']
 def continue_conversation(messages, temperature=0.7):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
