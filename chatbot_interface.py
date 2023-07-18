@@ -36,7 +36,7 @@ styl = f"""
       position: fixed;
       bottom: 3rem;
       z-index: 9999;
-        border: none;
+      border: none;
       border-radius: 4px;
       padding: 10px;
       background-color: #f5f5f5;
