@@ -35,7 +35,17 @@ styl = f"""
     .stTextInput {{
       position: fixed;
       bottom: 3rem;
-      z-index:9999;
+      z-index: 9999;
+        border: none;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      color: #333333;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      margin-left: 10px;
+      outline: none;
     }}
 </style>
 """
