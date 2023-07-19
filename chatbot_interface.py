@@ -32,7 +32,11 @@ import streamlit as st
 from streamlit_chat import message
 import ibm_db
 
-
+st.set_page_config(
+    page_title="Real-Time Presidential Race Analysis",
+    page_icon="logo.png",
+    layout="wide",
+)
 
 col1_width = 30
 col2_width = 70
