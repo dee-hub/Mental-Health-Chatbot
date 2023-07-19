@@ -33,8 +33,8 @@ from streamlit_chat import message
 import ibm_db
 
 st.set_page_config(
-    page_title="Real-Time Presidential Race Analysis",
-    page_icon="logo.png",
+    page_title="HUSU",
+    page_icon="https://assets-cdn.sums.su/HU/images/logos/HUSU_Logo_Master_Blue-250px.webp",
     layout="wide",
 )
 
