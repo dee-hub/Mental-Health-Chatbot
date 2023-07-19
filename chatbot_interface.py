@@ -42,23 +42,24 @@ col1_width = 30
 col2_width = 60
 col1, col2 = st.columns([col1_width, col2_width])
 
-col1.markdown("""
-<style> 
-.custom-column {
-        background-color: white;
-        border: 1px solid #dddddd;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .vertical-line {
-        border-left: 1px solid #dddddd;
-        height: 100%;
-        margin: 0 10px;
-    }
-</style>
-""", unsafe_allow_html=True)
 with col1:
+    col1_style = ("""
+    <style> 
+        .custom-column {
+            background-color: white;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .vertical-line {
+            border-left: 1px solid #dddddd;
+            height: 100%;
+            margin: 0 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+    st.markdown(col1_style, unsafe_allow_html=True)
     st.expander("""HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions,
         offer support during challenging times, and provide valuable insights into improving your overall well-being.
         Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space
