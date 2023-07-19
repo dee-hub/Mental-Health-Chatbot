@@ -71,9 +71,6 @@ styl = f"""
     .css-1629p8f{{
         margin-top:-85px;
     }}
-    * {{
-        box-sizing: content-box;
-    }}
 </style>
 """
 
