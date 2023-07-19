@@ -36,7 +36,7 @@ import ibm_db
 
 col1_width = 2
 col2_width = 3
-col1, col2 = st.sidebar.columns([col1_width, col2_width])
+col1, col2 = st.columns([col1_width, col2_width])
 
 col1.markdown("""
 <style>
