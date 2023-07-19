@@ -64,6 +64,7 @@ styl = f"""
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       margin-left:10px;
       outline: none;
+      margin-bottom: 40px;
     }}
     .css-1v0mbdj {{
         margin-top: -85px;
