@@ -39,7 +39,7 @@ st.set_page_config(
 )
 
 with st.sidebar:
-    st.image(image = 'https://assets-cdn.sums.su/HU/images/logos/HUSU_Logo_Master_Blue-250px.webp', use_column_width=True)
+    st.image(image = 'https://assets-cdn.sums.su/HU/images/logos/HUSU_Logo_Master_Blue-250px.webp', width=200)
     st.info(f"""HUSU is an empathetic mental health counseling chatbot, 
     offering personalized support for challenging emotions. It creates a safe space to express feelings without judgment, 
     helping with stress, anxiety, depression, and more. """)
