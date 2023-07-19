@@ -58,7 +58,7 @@ with col1:
             margin: 0 10px;
         }
     </style>
-""", unsafe_allow_html=True)
+""")
     st.markdown(col1_style, unsafe_allow_html=True)
     st.expander("""HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions,
         offer support during challenging times, and provide valuable insights into improving your overall well-being.
