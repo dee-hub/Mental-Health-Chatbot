@@ -43,8 +43,6 @@ col1.markdown("""
     .custom-column {
         background-color: black;
         color: white;
-        padding: 10px;
-        border-radius: 10px;
     }
 </style>
 <div class="custom-column">
