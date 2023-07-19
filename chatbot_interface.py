@@ -72,7 +72,7 @@ styl = f"""
         margin-top:-85px;
     }}
     * {{
-        width:100%;
+        box-sizing: content-box;
     }}
 </style>
 """
