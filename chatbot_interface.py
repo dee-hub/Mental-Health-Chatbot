@@ -43,10 +43,10 @@ with st.sidebar:
     with st.expander("""About HUSU"""):
         st.write(f"""<p style='font-size:13px'>HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions,
     offer support during challenging times, and provide valuable insights into improving your overall well-being.
-    Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space
+    <br>Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space
     for individuals to express their feelings and thoughts without judgment. Whether you're experiencing stress, anxiety, depression,
     or simply seeking someone to talk to, HUSU is here to listen and offer personalized guidance.
-    By utilizing cutting-edge natural language processing, HUSU can comprehend and respond to a wide range of
+    <br>By utilizing cutting-edge natural language processing, HUSU can comprehend and respond to a wide range of
     emotions and concerns, tailoring its responses to each user's unique needs. </p>""", unsafe_allow_html=True)
 styl = f"""
 <style>
@@ -64,6 +64,9 @@ styl = f"""
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       margin-left: 10px;
       outline: none;
+    }}
+    .css-1v0mbdj {{
+        margin_top: -10px;
     }}
 </style>
 """
