@@ -64,12 +64,13 @@ styl = f"""
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       margin-left: 10px;
       outline: none;
+      width:100%;
     }}
     .css-1v0mbdj {{
         margin-top: -85px;
     }}
     .css-1629p8f{{
-        margin-top:-30px;
+        margin-top:-85px;
     }}
 </style>
 """
