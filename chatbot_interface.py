@@ -85,19 +85,19 @@ context = [
 ]
 
 with st.sidebar:
-    st.markdown(f"<p>HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions, \
-    offer support during challenging times, and provide valuable insights into improving your overall well-being. \
-    Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space \
-    for individuals to express their feelings and thoughts without judgment. \n\n Whether you're experiencing stress, anxiety, depression, \
-    or simply seeking someone to talk to, HUSU is here to listen and offer personalized guidance. \
-    By utilizing cutting-edge natural language processing, HUSU can comprehend and respond to a wide range of \
-    emotions and concerns, tailoring its responses to each user's unique needs. \n\n It can also provide helpful coping mechanisms, \
-    relaxation techniques, and resources to promote self-care and emotional resilience. \n\n Additionally, HUSU respects your privacy and confidentiality, \
-    ensuring that all interactions remain secure and anonymous. Its primary goal is to \
-    assist and support users in their mental health journey, acting as a complement to professional counseling rather than a replacement. \
-    \n\n Remember, seeking help and discussing your emotions is an essential step towards mental well-being, \
-    and HUSU is here to be your caring companion on this path to a healthier and happier life. \
-    Don't hesitate to reach out to HUSU whenever you need someone to talk to or require assistance \
+    st.markdown(f"<p>HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions,
+    offer support during challenging times, and provide valuable insights into improving your overall well-being.
+    Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space
+    for individuals to express their feelings and thoughts without judgment. Whether you're experiencing stress, anxiety, depression,
+    or simply seeking someone to talk to, HUSU is here to listen and offer personalized guidance.
+    By utilizing cutting-edge natural language processing, HUSU can comprehend and respond to a wide range of
+    emotions and concerns, tailoring its responses to each user's unique needs. It can also provide helpful coping mechanisms,
+    relaxation techniques, and resources to promote self-care and emotional resilience. Additionally, HUSU respects your privacy and confidentiality,
+    ensuring that all interactions remain secure and anonymous. Its primary goal is to
+    assist and support users in their mental health journey, acting as a complement to professional counseling rather than a replacement.
+    Remember, seeking help and discussing your emotions is an essential step towards mental well-being,
+    and HUSU is here to be your caring companion on this path to a healthier and happier life.
+    Don't hesitate to reach out to HUSU whenever you need someone to talk to or require assistance
     with managing your mental health. Together, we can work towards a brighter and more fulfilling future.</p>", unsafe_allow_html=False)
     
 if 'context' not in st.session_state:
