@@ -39,9 +39,9 @@ st.set_page_config(
 )
 
 with st.sidebar:
-    st.write(f"""<p style='font-size:13px'> HUSU is an empathetic mental health counseling chatbot, 
+    st.info(f"""HUSU is an empathetic mental health counseling chatbot, 
     offering personalized support for challenging emotions. It creates a safe space to express feelings without judgment, 
-    helping with stress, anxiety, depression, and more. </p>""", unsafe_allow_html=True)
+    helping with stress, anxiety, depression, and more. """)
     
     with st.expander("""See explanation"""):
         st.info("The chart above shows some numbers I picked for you. I rolled actual dice for these, so they're *guaranteed* to be random.")
