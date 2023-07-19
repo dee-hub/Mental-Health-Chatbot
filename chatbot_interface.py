@@ -63,7 +63,7 @@ styl = f"""
       font-size: 14px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       margin-left:-60px;
-      width:90%;
+      width:100%;
       outline: none;
     }}
     .css-1v0mbdj {{
