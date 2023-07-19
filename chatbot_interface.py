@@ -38,15 +38,23 @@ st.set_page_config(
     layout="wide",
 )
 
-col1_width = 30
-col2_width = 70
+col1_width = 40
+col2_width = 60
 col1, col2 = st.columns([col1_width, col2_width])
 
 col1.markdown("""
-<style>
-    .custom-column {
-        background-color: black;
-        color: white;
+<style> 
+.custom-column {
+        background-color: white;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .vertical-line {
+        border-left: 1px solid #dddddd;
+        height: 100%;
+        margin: 0 10px;
     }
 </style>
 <div class="custom-column">
