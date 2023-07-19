@@ -84,7 +84,8 @@ context = [
      the conversation in a natural way., ."},
 ]
 
-st.sidebar.write("""HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions, \
+with st.sidebar:
+    st.markdown("""HUSU is a mental health counselling chatbot designed to help you navigate through difficult emotions, \
     offer support during challenging times, and provide valuable insights into improving your overall well-being. \
     Through its advanced artificial intelligence and empathetic programming, HUSU aims to create a safe and understanding space \
     for individuals to express their feelings and thoughts without judgment. \n\n Whether you're experiencing stress, anxiety, depression, \
