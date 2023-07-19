@@ -108,7 +108,7 @@ with st.sidebar:
     \n\n Remember, seeking help and discussing your emotions is an essential step towards mental well-being, \
     and HUSU is here to be your caring companion on this path to a healthier and happier life. \
     Don't hesitate to reach out to HUSU whenever you need someone to talk to or require assistance \
-    with managing your mental health. Together, we can work towards a brighter and more fulfilling future.</p>""", unsafe_allow_html=False))
+    with managing your mental health. Together, we can work towards a brighter and more fulfilling future.</p>""", unsafe_allow_html=False)
     
 if 'context' not in st.session_state:
     st.session_state['context'] = context
