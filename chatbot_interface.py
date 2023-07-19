@@ -66,7 +66,7 @@ styl = f"""
       outline: none;
     }}
     .css-1v0mbdj {{
-        margin-top: -10px;
+        margin-top: -85px;
     }}
 </style>
 """
