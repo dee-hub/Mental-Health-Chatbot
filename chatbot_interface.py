@@ -34,8 +34,8 @@ import ibm_db
 
 
 
-col1_width = 2
-col2_width = 3
+col1_width = '30%'
+col2_width = '70%'
 col1, col2 = st.columns([col1_width, col2_width])
 
 col1.markdown("""
