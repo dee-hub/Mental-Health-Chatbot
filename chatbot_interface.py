@@ -38,7 +38,7 @@ st.set_page_config(
     layout="wide",
 )
 
-col1_width = 40
+col1_width = 30
 col2_width = 60
 col1, col2 = st.columns([col1_width, col2_width])
 
