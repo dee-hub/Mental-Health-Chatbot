@@ -62,7 +62,8 @@ styl = f"""
       font-family: Arial, sans-serif;
       font-size: 14px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-      margin-left:-40px;
+      margin-left:-60px;
+      width:50%;
       outline: none;
     }}
     .css-1v0mbdj {{
