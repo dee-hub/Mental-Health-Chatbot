@@ -77,29 +77,6 @@ styl = f"""
 
 st.markdown(styl, unsafe_allow_html=True)
 
-#Replace the placeholder values with your actual Db2 hostname, username, and password:
-dsn_hostname = "8e359033-a1c9-4643-82ef-8ac06f5107eb.bs2io90l08kqb1od8lcg.databases.appdomain.cloud" # e.g.: "54a2f15b-5c0f-46df-8954-7e38e612c2bd.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud"
-dsn_uid = "klp67023"        # Username
-dsn_pwd = "fcD4OYKB3uykMu5F"        # Password
-
-dsn_driver = "{IBM DB2 ODBC DRIVER}"
-dsn_database = "BLUDB"            # e.g. "BLUDB"
-dsn_port = "30120"                # e.g. "32733" 
-dsn_protocol = "TCPIP"            # i.e. "TCPIP"
-dsn_security = "SSL"              #i.e. "SSL"
-
-#DO NOT MODIFY THIS CELL. Just RUN it with Shift + Enter
-#Create the dsn connection string
-dsn = (
-    "DRIVER={0};"
-    "DATABASE={1};"
-    "HOSTNAME={2};"
-    "PORT={3};"
-    "PROTOCOL={4};"
-    "UID={5};"
-    "PWD={6};"
-    "SECURITY={7};").format(dsn_driver, dsn_database, dsn_hostname, dsn_port, dsn_protocol, dsn_uid, dsn_pwd,dsn_security)
-
 context = [
     #{"role": "system", "content": "You are HUSU, a mental health therapist for University of Hull, who\
      #uses compassionate listening to have helpful and meaningful conversations with users. HUSU \
@@ -139,15 +116,6 @@ def add_prompts_conversation(user_input):
 
 def get_response(msg):
     user, chatbot = add_prompts_conversation(msg)
-    conn = ibm_db.connect(dsn, "", "")
-    insert_data_sql = "INSERT INTO  KLP67023.CHATBOT_CONVO VALUES (?, ?)"
-    prep_stmt = ibm_db.prepare(conn, insert_data_sql)
-    ibm_db.bind_param(prep_stmt, 1, user)
-    ibm_db.bind_param(prep_stmt, 2, chatbot)
-    ibm_db.execute(prep_stmt)
-    #print(f"{resp_221} = Uploaded on DB")
-    ibm_db.close(conn)
-
     return chatbot
 
 #Type your questions within the functions
